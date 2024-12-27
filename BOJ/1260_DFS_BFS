@@ -1,0 +1,66 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <cstring>
+#include <algorithm>
+
+#define MAX 1001
+
+using namespace std;
+
+int N,M,V;
+vector<int> map[MAX];
+bool visitied[MAX];
+void dfs(int now){
+  
+  visitied[now] = true;
+  cout<<now<<" ";
+  for(int i = 0 ;i < map[now].size() ;i ++){
+    if(visitied[map[now][i]]) continue;
+    dfs(map[now][i]);
+  }
+}
+void bfs(int now){
+  
+  visitied[now] = true;
+  queue<int> q;
+  q.push(now);
+  
+  while(!q.empty()){
+    int index = q.front();
+    cout<<index<<" ";
+    q.pop();
+    for(int i = 0 ;i < map[index].size() ;i ++){
+      if(visitied[map[index][i]]) continue;
+      visitied[map[index][i]] = true;
+      q.push(map[index][i]);
+    }
+  }
+  
+}
+int main() 
+{
+  ios_base::sync_with_stdio(false); 
+  cin.tie(NULL); 
+  cout.tie(NULL);
+  
+  int result=0;
+  cin >> N >> M >> V;
+    
+    for(int i =0; i< M ; i++){
+      int a ,b; 
+      cin >> a >> b;
+      
+      map[a].push_back(b);
+      map[b].push_back(a);
+    }
+     for(int i =1; i<= N ; i++)sort(map[i].begin(),map[i].end());
+    
+    dfs(V);
+    memset(visitied,false,N+1);
+    
+    cout<<endl;
+    bfs(V);
+    
+    return 0;
+}

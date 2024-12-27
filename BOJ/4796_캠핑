@@ -1,0 +1,18 @@
+#include <iostream>
+using namespace std;
+
+int main() 
+{
+    int i=1;
+    int P,V,L;
+    while(1){
+      int result =0;
+      cin >> L >> P >> V; //연속 가능 수, 한정 수, 휴가 일수
+      if(L == 0 && P == 0 && V == 0)break;
+      result+=((V/P)*L);
+      if(V%P<=L) result+=(V%P);
+      else result+=L;
+      cout<<"Case "<<i++<<": "<<result<<"\n";
+    }
+    return 0;
+}

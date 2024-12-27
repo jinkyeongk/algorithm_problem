@@ -1,0 +1,78 @@
+#include <iostream>
+#include <queue>
+#include <cstring>
+#define MAX 51
+using namespace std;
+bool visited[MAX][MAX];
+int map[MAX][MAX];
+int w,h;
+int answer;
+
+struct nodes{
+  int y;
+  int x;
+};
+
+int dir[8][2]={
+  1,0,
+  0,1,
+  -1,0,
+  0,-1,
+  -1,-1,
+  1,1,
+  -1,1,
+  1,-1
+};
+void bfs(int y,int x){
+
+    queue<nodes> q;
+      q.push({y,x});
+       visited[y][x]=true;
+            
+      while(!q.empty()){
+      nodes now = q.front();
+        q.pop();
+        
+        for(int i=0;i<8;i++){
+          int dy = dir[i][0] + now.y;
+          int dx = dir[i][1] + now.x;
+          if(visited[dy][dx] ||map[dy][dx] == 0)continue;
+          if(dy<0 || dx<0 || dy>=h || dx >= w)continue;
+          visited[dy][dx] =true;
+            q.push({dy,dx});
+        }
+      }
+      
+        answer++;
+}
+int main() 
+{
+      while(1){
+        
+      cin>>w>>h;
+      
+      if(w==0 && h==0) break;
+      
+      
+      for(int i = 0 ; i < h ; i++){
+         for(int j = 0 ; j < w ; j++){
+          cin>>map[i][j];
+        } 
+      }
+      
+       for(int i = 0 ; i < h ; i++){
+         for(int j = 0 ; j < w ; j++){
+          if(map[i][j]==1 &&visited[i][j]==false)bfs(i,j);
+        } 
+      }
+        cout<<answer<<endl;
+        answer=0;
+        memset(visited,false,sizeof(visited));
+        memset(map,0,sizeof(map));
+           
+           
+    }
+          
+
+    return 0;
+}

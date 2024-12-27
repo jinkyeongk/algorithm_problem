@@ -1,0 +1,47 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+#define MAX 65
+using namespace std;
+int N;
+vector<string> map;
+
+
+void recursive2(int x,int y,int size){
+  char c = map[y][x];
+  for(int i=y;i<y+size;i++){
+    for(int j=x;j<x+size;j++){
+      if(map[i][j]!=c){ //해당 범위와 같은 숫자인지 판별하고 
+      cout<<'('; //아니면 괄호를 열고 Z순서로 탐색한다
+      recursive2(x,y,size/2);
+      recursive2(x+size/2,y,size/2);
+      recursive2(x,y+size/2,size/2);
+      recursive2(x+size/2,y+size/2,size/2);
+      cout<<')';
+      return;
+      }
+    }
+  }
+  cout<<c;
+}
+
+int main() 
+{
+  
+	ios::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+	
+	cin>>N;
+	int n =N;
+ while(n--){
+   string s;
+   cin>>s;
+   map.push_back(s);
+  }
+  
+ recursive2(0,0,N);
+  
+  
+    return 0;
+}

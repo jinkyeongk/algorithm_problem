@@ -1,0 +1,56 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+
+#define MAX 1001
+
+using namespace std;
+
+int N,M;
+vector<int>map[MAX];
+bool visited [MAX];
+
+void bfs(int now){
+  visited[now] = true;
+  queue<int> q;
+  q.push(now);
+  
+  
+  while(!q.empty()){
+    int index = q.front();
+    q.pop();
+    for(int i=0;i<map[index].size();i++){
+      if(visited[map[index][i]])continue;
+      visited[map[index][i]] = true;
+      q.push(map[index][i]);
+  }
+    
+  }
+  
+  
+}
+int main() 
+{
+  ios_base::sync_with_stdio(false); 
+  cin.tie(NULL); 
+  cout.tie(NULL);
+  
+  int result=0;
+  cin >> N >> M ;
+    
+    for(int i =0; i< M ; i++){
+      int a ,b; 
+      cin >> a >> b;
+      
+      map[a].push_back(b);
+      map[b].push_back(a);
+    }
+    for(int i =1; i<=N ; i++){
+        if(visited[i])continue;
+        bfs(i);
+        result++;
+    }
+    cout << result;
+    
+    return 0;
+}

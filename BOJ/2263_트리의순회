@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+
+#define MAX 100001
+
+using namespace std;
+
+int index[MAX];
+int inorder[MAX];
+int postorder[MAX];
+int N;
+void input(){
+  
+  ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    cin>>N;
+    
+    for(int i = 1 ; i <= N ; i++){
+      cin>>inorder[i];
+      //중위순위 값을 인덱스로 넣으면 순서값이 나오도록
+      index[inorder[i]] = i;
+    }
+    for(int i = 1 ; i <= N ; i++){
+      cin>>postorder[i];
+    }
+}
+
+void makePreOrder(int inSt,int inEd,int postSt,int postEd){
+  //더이상 나눌 게 없을 경우 리턴
+  if(inSt>inEd || postSt>postEd)return;
+  
+  //postOrder에서는 마지막 값이 Root
+  int rootIndex = index[postorder[postEd]];
+  int leftSize = rootIndex-inSt;
+  //int rightSize = inEd-rootIndex;
+  
+  cout<<inorder[rootIndex]<<' '; //root 값 
+  
+  //root를 제외하고
+  //중위순회의 루트 기준 왼쪽 노드들 ,후위순회의 루트기준 왼쪽 
+  makePreOrder(inSt,rootIndex-1,postSt,postSt+leftSize-1);
+  makePreOrder(rootIndex+1,inEd,postSt+leftSize,postEd-1);
+  //makePreOrder(rootIndex+1,inEd,postEd-rightSize,postEd-1);
+  
+}
+int main() 
+{
+    input();
+    makePreOrder(1,N,1,N);
+    
+    return 0;
+}
