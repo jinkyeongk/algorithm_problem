@@ -1,0 +1,45 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+int main() 
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    int H,W,result=0;
+    cin>>H>>W;
+    
+    vector<int> v;
+    
+    
+    for(int i = 1 ; i <= W ;i++){
+      int num;cin>>num;
+      v.push_back(num);
+    }
+    
+  //투 포인터 방식
+  //i번째 인덱스를 기준으로 
+   for(int i = 1;i < W-1; i++){
+     int l=0,r=0;
+     
+     
+     for(int j =0;j<i;j++){
+     //왼쪽에 더 큰 값이 있다면 l값 업데이트
+       if(v[i]<v[j]) l = max(l,v[j]);
+     }
+     
+     for(int j =i+1;j<W;j++){
+       //오른쪽에 더 큰 값이 있다면 r값 업데이트
+       if(v[i]<v[j]) r = max(r,v[j]);
+     }
+     
+     //큰 값이 업데이트 된 적 있다면
+     //둘 중 작은 값을 선택해서 기준 값(i번째 인덱스 값)을 뺀 값을 더한다.
+     if(l&&r)result+=min(l,r)-v[i];
+   }
+ 
+    cout<<result<<'\n';
+    return 0;
+}
