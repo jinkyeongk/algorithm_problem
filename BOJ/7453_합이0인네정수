@@ -1,0 +1,48 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+#define MAX 4001
+
+using namespace std;
+
+
+int main() 
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    long long result =0;
+    
+    vector<long long> ab,cd;
+    
+    long long num[MAX][4];
+    
+    int N; cin>>N;
+    
+    for(int i = 0 ; i < N ; i++)
+      for(int j = 0 ; j < 4 ; j++) {
+        cin >> num[i][j];
+      }
+    
+    
+    for(int i = 0 ; i < N ; i++)
+      for(int j = 0 ; j < N ; j++) {
+        ab.push_back(num[i][0] + num[j][1]); //a+b 조합
+        cd.push_back(num[i][2] + num[j][3]); //c+d 조합
+      }
+      
+      //오름차순 정렬
+      sort(ab.begin(),ab.end());
+      sort(cd.begin(),cd.end());
+      for(int i = 0 ; i < ab.size() ; i++){
+        //-ab[i]인 cd 배열 중 첫 인덱스와 마지막 인덱스 찾기
+        int minn = lower_bound(cd.begin(),cd.end(),-ab[i]) - cd.begin();
+        int maxx = upper_bound(cd.begin(),cd.end(), -ab[i]) - cd.begin();
+        //갯수만큼 result에 더하기
+        result +=(maxx - minn);
+      }
+      
+    cout<<result<<'\n';
+    return 0;
+}

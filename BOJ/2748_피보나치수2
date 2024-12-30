@@ -1,0 +1,37 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+
+using namespace std;
+
+vector<long long> vt(91);
+
+long long  fibo(long long n){
+  if(n==0) return vt[0];
+  if(n==1) return vt[1];
+  
+  if(vt[n] == 0 && n != 0 ){
+    vt[n] = fibo(n-1)+ fibo(n-2);
+  }
+  
+  return vt[n-1]+ vt[n-2];
+}
+
+int main() 
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    int N ; cin>>N;
+    long long result;
+    
+    vt[1] = 1;
+    
+    result = fibo(N);
+    
+    cout<<result;
+    
+    
+    return 0;
+}
