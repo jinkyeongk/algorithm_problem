@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+int visited[9];
+int N , M ;
+void dfs(int now, int level){
+  if(level == M) {
+     for(int i = 0 ; i < M ; i++ ){
+       cout<<visited[i] << " ";
+     }
+     cout<<endl;
+  }else{
+     for(int i = now ; i <= N ; i++ ){
+       visited[level] = i;
+       dfs(i+1,level+1);
+       visited[level] = 0;
+     }
+  }
+  
+}
+int main() 
+{
+    
+    cin >> N >> M;
+    
+    dfs(1,0);
+    
+    
+    return 0;
+}

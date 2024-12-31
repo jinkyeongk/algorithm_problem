@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+int map[129][129];
+int white,blue;
+void checking(int startX,int startY,int sz){
+  int colorFlag =map[startY][startX]; //시작점의 색을 입력
+  bool cut = false;
+  for(int i = startY ; i < startY+sz ; i ++){
+      for(int j = startX+1 ; j < startX+sz ; j ++){
+        if(colorFlag != map[i][j]){// 색이 다르면
+          cut = true;
+          break;
+        }
+      } 
+    }
+    
+    if(cut){
+      checking(startX,startY,sz/2);
+      checking(startX, startY + sz/2,+ sz/2);
+      checking(startX + sz/2 ,startY,sz/2);
+      checking(startX + sz/2, startY + sz/2, sz/2);
+          
+    }else{
+      if(colorFlag==1) blue++;
+      else white++;
+      
+    }
+  
+}
+int main() 
+{
+    
+    int N ; cin >> N ;
+    //white = 0, blue = 1
+    for(int i = 1 ; i <= N ; i ++){
+      for(int j = 1 ; j <= N ; j ++){
+        cin >>map[i][j];
+      } 
+    }
+    
+    checking(1,1,N);
+    
+    cout<<white<<'\n'<<blue;
+    return 0;
+}

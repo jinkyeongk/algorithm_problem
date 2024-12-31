@@ -1,0 +1,65 @@
+#include <iostream>
+#include <queue>
+using namespace std;
+
+char map[51][51];
+int result = 51*51;
+void Wcheck(int x,int y){
+  char firstColor ='W';
+  int needChage =0;
+  for(int i = y ; i < y+8 ; i++){
+      for(int j = x ; j < x+8 ; j++){
+         if(i%2 == 1 && j%2 == 1){ //홀수번째 행 && 홀수번째 열
+           if(map[i][j] != firstColor) needChage++;
+         }else if(i%2 == 1 && j%2 == 0){ //홀수번째 행 && 짝수번째 열
+           if(map[i][j] == firstColor) needChage++;
+         }else if(i%2 == 0 && j%2 == 1){ //짝수번째 행 && 홀수번째 열
+           if(map[i][j] == firstColor) needChage++;
+         }else if(i%2 == 0 && j%2 == 0){ //짝수번째 행 && 짝수번째 열
+           if(map[i][j] != firstColor) needChage++;
+         }
+      }
+    }
+    result = min(result,needChage);
+}
+void Bcheck(int x,int y){
+  char firstColor ='B';
+  int needChage =0;
+  for(int i = y ; i < y+8 ; i++){
+      for(int j = x ; j < x+8 ; j++){
+         if(i%2 == 1 && j%2 == 1){ //홀수번째 행 && 홀수번째 열
+           if(map[i][j] != firstColor) needChage++;
+         }else if(i%2 == 1 && j%2 == 0){ //홀수번째 행 && 짝수번째 열
+           if(map[i][j] == firstColor) needChage++;
+         }else if(i%2 == 0 && j%2 == 1){ //짝수번째 행 && 홀수번째 열
+           if(map[i][j] == firstColor) needChage++;
+         }else if(i%2 == 0 && j%2 == 0){ //짝수번째 행 && 짝수번째 열
+           if(map[i][j] != firstColor) needChage++;
+         }
+      }
+    }
+    result = min(result,needChage);
+}
+
+int main() 
+{
+    int N, M;
+    cin >> N >> M;
+    
+    
+    for(int i = 1 ; i <= N ; i++){
+      for(int j = 1 ; j <= M ; j++){
+        scanf("%1s",&map[i][j]);
+      }
+    }
+    
+    for(int i = 1 ; i <= N-7 ; i++){
+      for(int j = 1 ; j <= M-7 ; j++){
+        Wcheck(j,i);
+        Bcheck(j,i);
+      }
+    }
+    cout<<result;
+    
+    return 0;
+}
