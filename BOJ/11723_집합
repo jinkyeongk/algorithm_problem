@@ -1,0 +1,49 @@
+#include <iostream>
+#include <set>
+using namespace std;
+
+set<int> q;
+void changeAll(){
+  for(int i = 1;i<=20;i++){
+    q.insert(i);
+  }
+  return;
+}
+int main() 
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    int N; cin >> N ;
+    
+    for(int i = 0 ; i < N ; i++){
+      string doing;
+      cin >> doing;
+      if(doing == "all"){
+         changeAll();
+         continue;
+      } else if( doing == "empty"){
+         q.clear();
+         continue;
+      }
+      int num; 
+      cin >> num;
+      
+     if(doing == "add") {
+       q.insert(num);
+     }else if(doing == "remove") {
+       q.erase(num);
+     }else if(doing == "check") {
+       auto it = q.find(num);
+       if(it == q.end()) cout<<"0\n";
+       else cout<<"1\n";
+     }else if(doing == "toggle") {
+      if(q.find(num)!=q.end()){//존재하면
+        q.erase(num);
+      }else{
+        q.insert(num);
+      }
+     }
+    }
+    return 0;
+}
