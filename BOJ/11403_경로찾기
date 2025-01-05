@@ -1,0 +1,66 @@
+#include <iostream>
+#include <string>
+#include <queue>
+
+#define MAX 101
+using namespace std;
+struct node{
+  int x,y;
+};
+int dir[4][2]={
+  0,1,
+  1,0,
+  0,-1,
+  -1,0
+};
+int N ; 
+int map[MAX][MAX];
+
+void floydWarshall(int x, int y){
+  
+  int result[N+1][N+1] = {0};
+  
+  for(int i = 1 ; i <= N ; i ++ ){
+      for(int j = 1 ; j <= N ; j ++ ){
+        result[i][j] = map[i][j];
+      }
+  }
+  
+  
+  for(int k = 1 ; k <= N ; k ++ ){
+    for(int i = 1 ; i <= N ; i ++ ){
+      for(int j = 1 ; j <= N ; j ++ ){
+        if(result[i][k]  + result[k][j] > 1 )
+            result[i][j] = 1 ;
+      }
+    }
+  }
+  
+  for(int i = 1 ; i <= N ; i ++ ){
+      for(int j = 1 ; j <= N ; j ++ ){
+        cout<<result[i][j]<<" ";
+      }
+      cout<<'\n';
+  }
+}
+
+int main() 
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    cin >> N;
+    
+    for(int i = 1 ; i <= N ; i ++ ){
+        for(int j = 1 ; j <= N ; j ++ ){
+          cin>>map[i][j];
+        }
+    }
+  
+
+    floydWarshall(0,0);
+
+   
+    return 0;
+}

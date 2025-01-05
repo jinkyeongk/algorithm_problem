@@ -1,0 +1,78 @@
+#include <iostream>
+#include <string>
+#include <queue>
+#include <map>
+
+#define MAX 601
+
+using namespace std;
+struct node{
+  int x,y;
+};
+int dir[4][2]={
+  0,1,
+  1,0,
+  0,-1,
+  -1,0
+};
+int result;
+int n , m ; //행 y ==n  열 x ==m
+char seat[MAX][MAX];
+bool visited[MAX][MAX];
+
+void bfs(int x, int y){
+  
+  queue<node> q;
+  
+  q.push({x,y});
+  
+  while(!q.empty()){
+    
+     node now = q.front();
+     q.pop();
+     visited[now.y][now.x] = true;
+     
+     
+     for(int i = 0 ; i < 4 ;i++){
+       int dy = now.y + dir[i][0];
+       int dx = now.x + dir[i][1];
+       
+       if(dy >= n || dx >= m || dy < 0 || dx < 0 ) continue;
+       if(seat[dy][dx] == 'X' )continue;
+       if(visited[dy][dx] )continue;
+       if(seat[dy][dx] == 'P') result++;
+       q.push({dx,dy});
+     visited[dy][dx] = true;
+     }
+  }
+  return;
+}
+
+int main() 
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    int x,y;
+    
+    cin >> n >> m;
+    
+    for(int i = 0 ; i < n ; i ++ ){
+        for(int j = 0 ; j < m ; j ++ ){
+          cin>>seat[i][j];
+          if(seat[i][j] == 'I'){
+            y = i;
+            x = j;
+          }
+        }
+    }
+  
+
+    bfs(x,y);
+    
+    if(result == 0) cout<<"TT";
+    else cout << result;
+   
+    return 0;
+}
