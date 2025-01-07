@@ -1,0 +1,93 @@
+#include <iostream>
+#include <string>
+#include <queue>
+
+#define MAX 101
+using namespace std;
+struct node{
+  int x,y,level;
+};
+int dir[4][2]={
+  1,0,
+  0,1,
+  -1,0,
+  0,-1,
+};
+
+int N,M,H; 
+int total;
+int days;
+int map[MAX][MAX*MAX];
+bool visited[MAX][MAX*MAX];
+void init(){
+  
+ 
+  for(int i = 0 ; i < N*H ; i++){
+      for(int j = 0 ; j <  M; j++){
+        if(map[i][j] ==0 || map[i][j] == 1) total++;
+        else total--;
+      } 
+    }
+    
+  
+}
+bool check(){
+  int cnt = 0;
+  
+  for(int i = 0 ; i < N*H ; i++){
+      for(int j = 0 ; j <  M; j++){
+        cnt+=map[i][j];
+        cout<<map[i][j];
+      } 
+      cout<<endl;
+    }
+    
+    if(total == cnt) return true;
+    else return false;
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    queue<node> q;
+    
+    cin >> M >> N >> H;
+    
+    for(int i = 0 ; i < N*H ; i++){
+        for(int j = 0 ; j <  M; j++){
+        cin >> map[i][j];
+        if(map[i][j] == 1) q.push({j,i,0});
+      } 
+    }
+    init();
+    
+    if(check()){
+      cout<<"0\n";
+      return 0;
+    }
+
+    while(!q.empty()){
+      node now = q.front();
+      q.pop();
+      days = now.level;
+      visited[now.y][now.x] = true;
+      
+      for(int i = 0 ; i < 4 ; i++ ){
+        int dy = now.y + dir[i][0];
+        int dx = now.x + dir[i][1];
+        
+        if(dy>= N*H || dx >= M || dy <0 ||dx <0)continue;
+        if(visited[dy][dx])continue;
+        if(map[dy][dx] == -1)continue;
+        if(map[dy][dx] == 0) map[dy][dx] = now.level+1;
+        visited[dy][dx] = true;
+        
+        q.push({dx,dy,now.level+1});
+      }
+    }
+   if(check())  cout<<days;
+    else cout<<-1;
+    return 0;
+}

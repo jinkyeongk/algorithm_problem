@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <set>
+#include <algorithm>
+
+using namespace std;
+
+int N,M;
+vector<int> path(9);
+bool chk[9];
+vector<int>  num;
+set<vector<int> > s;
+
+void recursive(int n ,int level ){
+  
+  if(level == M){
+    s.insert(path);
+
+    return;
+  }
+  
+  for(int i = 0 ; i < N ; i++ ){
+      if(chk[i])continue;
+      chk[i]=true;
+      path[level+1] = num[i];
+      recursive(num[i],level+1);
+      chk[i]=false;
+    }
+  
+}
+int main() 
+{
+  
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    
+    cin>> N >> M ;
+    
+    for(int i = 0 ; i < N ; i++ ){
+      int numb;
+      cin >>  numb ;
+      num.push_back(numb);
+    }
+    path.resize(M+1);
+    sort(num.begin(),num.end());
+    
+    recursive(0,0);
+    
+    for(auto vector:s) {
+        for(auto temp:vector)
+          if(temp != 0)
+            cout << temp << " ";
+        cout << "\n";
+    }
+    return 0;
+}
