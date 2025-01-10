@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+vector<long long > prime;
+bool isPrime(int n){
+  if(n == 2){
+    return false;
+  }
+  for(int i =2 ; i * i <=n ;i++){
+    if(n%i==0)return false;
+  }
+  
+  return true;
+}
+int main() 
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    int N ;
+    cin >> N;
+    
+    for(int i =2; i <= 1000000 ;i++){
+      if(isPrime(i)){
+        prime.push_back(i);
+      }
+    }
+    
+    for(int i = 0 ; i < N ; i++ ){
+      bool flagPrime = true;
+      long long S;
+      cin >> S;
+      
+      for(int j = 0 ; j < prime.size() ; j++ ){
+        if(S % prime[j] == 0 ){
+          flagPrime = false;
+          break;
+        }
+      }
+      
+       if(flagPrime) cout<<"YES\n";
+       else cout<<"NO\n";
+    }
+    return 0;
+}
