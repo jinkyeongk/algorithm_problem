@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+
+#define MAX 501
+
+using namespace std;
+
+int N,maxx=-987654321;
+vector<vector<int>> num(MAX);
+int dp[MAX][MAX];
+int main() 
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    cin >> N;
+    int k = 0;
+    
+    for(int i = 0 ; i < N ; i++ ){
+      for(int j = 0 ; j <= i ; j++ ){
+        cin >> dp[i][j];
+      }
+    }
+    
+    for(int i = 0 ; i < N ; i++ ){
+      for(int j = 0 ; j <= i ; j++ ){
+        if(j ==0 ){
+          dp[i][j] = dp[i-1][0] + dp[i][j] ;
+        }else if( i == j){
+          dp[i][j] = dp[i-1][j-1] + dp[i][j] ;
+        }else{
+        dp[i][j] = dp[i][j] + max(dp[i-1][j],dp[i-1][j-1]);
+        }
+        maxx = max(maxx,dp[i][j]);
+      }
+    }
+    cout<<maxx;
+    
+    return 0;  
+}
