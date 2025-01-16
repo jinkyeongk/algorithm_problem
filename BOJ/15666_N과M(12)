@@ -1,0 +1,44 @@
+#include <iostream>
+#include <set>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int N , M ;
+vector<int> num(9);
+vector<int> path(9);
+set<vector<int>> s;
+void recur(int level, int now){
+  
+  if(level-1 == M){
+    s.insert(path);
+    return;
+  }
+  
+  for(int i =now ; i < N ; i++){
+    path[level] =num[i];
+    recur(level+1,i);
+    
+  }
+  
+}
+int main() 
+{
+    
+    cin>> N >> M ;
+    num.resize(N);
+    for(int i = 0 ; i <N ; i++){
+      cin >> num[i];
+    }
+    path.resize(M);
+    sort(num.begin(),num.end());
+    recur(0,0);
+   for (const auto& it : s) {
+		for(auto i : it){
+		  cout<< i<<' ';
+		}
+		cout<<'\n';
+	}
+
+    return 0;
+}
