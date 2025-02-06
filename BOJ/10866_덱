@@ -1,0 +1,63 @@
+#include <iostream>
+#include <deque>
+#include <string>
+#define MAX 10001
+using namespace std;
+int main(){
+    
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    
+    deque<int> dq;
+    string prompt;
+    int N, num ; 
+    cin >> N;
+    
+    while(N!=0){
+        N--;
+        cin >> prompt;
+        if(prompt == "push_back" ){
+            cin >> num;
+            dq.push_back(num);
+        }else if(prompt == "push_front"){
+            cin >> num;
+            dq.push_front(num);
+        }else if(prompt == "pop_front"){
+          if(dq.empty()){
+            cout<<"-1\n";
+          }else{
+           cout<<dq.front()<<'\n' ;
+           dq.pop_front();
+          }
+        }else if(prompt == "pop_back"){
+          if(dq.empty()){
+            cout<<"-1\n";
+          }else{
+           cout<<dq.back()<<"\n" ;
+           dq.pop_back();
+          }
+        }else if(prompt == "size"){
+          cout<<dq.size()<<"\n";
+        }else if(prompt == "empty"){
+          if(dq.empty()){
+            cout<<"1\n";
+          }else{
+            cout<<"0\n";
+          }
+        }else if(prompt == "front"){
+          if(dq.empty()){
+            cout<<"-1\n";
+          }else{
+            cout<<dq.front()<<"\n";
+          }
+        }else if(prompt == "back"){
+          if(dq.empty()){
+            cout<<"-1\n";
+          }else{
+            cout<<dq.back()<<"\n";
+          }
+        }
+    }
+    return 0;
+}
