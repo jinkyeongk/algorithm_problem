@@ -1,0 +1,57 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+#define MAX 1001
+
+using namespace std;
+int N , M ;
+int tree[MAX][MAX];
+
+void bfs(int start,int target){
+  bool visited[MAX]={false};
+  int minn;
+  queue <pair<int,int>> q;
+  q.push({start,0});
+  
+  while(!q.empty()){
+    
+    
+    int now = q.front().first;
+    int score = q.front().second;
+    q.pop();
+    visited[now] = true;
+    
+    if(now == target){
+      minn = score;
+      break;
+    }
+    
+    for(int i = 1 ; i <= N ; i++){
+      if(tree[now][i]==0)continue;
+      if(visited[i])continue;
+      q.push({i,score+tree[now][i]});
+    }
+  }
+  
+  cout<<minn<<'\n';
+}
+
+int main() 
+{
+    cin >> N >> M;
+    
+    for(int i = 0 ; i < N-1 ; i++ ){
+      int a,b,c;
+      cin>>a>>b>>c;
+      tree[a][b] = c;
+      tree[b][a] = c;
+    }
+    
+    for(int i = 0 ; i < M ; i++ ){
+      int st,ed;
+      cin >> st >> ed;
+      bfs(st,ed);
+    }
+    return 0;
+}
