@@ -1,0 +1,72 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <string>
+
+using namespace std;
+
+stack<char> st;
+string s;
+int answer ;
+bool check(){ // 스택이 비었는지 확인
+  if(st.empty()) return true;
+  else return false;
+}
+
+int main() 
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    cin>> s;
+    
+    int temp = 1;
+    
+    for(int i = 0 ; i < s.length() ; i++ ){ 
+      if(s[i] == '(' ){
+         st.push(s[i]);
+         temp*=2;
+      }
+      else if( s[i] == '[' ){
+        st.push(s[i]);
+        temp*=3;
+      }
+      else if(s[i] == ')') {
+          if(st.empty() || st.top() != '(') {
+              answer = 0;
+              break;
+            }
+            if(s[i-1] == '(' ) {
+              answer += temp;
+              temp /= 2;
+              st.pop();
+            }
+            else {
+              temp /= 2;
+              st.pop();
+            }
+      }else if(s[i] == ']' ){
+       
+          if(st.empty() || st.top() != '[') {
+              answer = 0;
+              break;
+            }
+            if(s[i-1] == '[') {
+              answer += temp;
+              temp /= 3;
+              st.pop();
+            }
+            else {
+              temp /= 3;
+              st.pop();
+            }
+      }
+    
+    }
+    
+    if(!check()) answer =0;
+    cout<<answer;
+    
+    return 0;
+}
