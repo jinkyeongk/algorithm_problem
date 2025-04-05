@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+
+int main() 
+{
+    long long target=0;
+    long long N =0;
+    
+    cin >> target;
+    
+    while(target>0){
+      N++;
+      target = target -N;
+    }
+    
+    if(target<0){
+      N--;
+    }
+    
+    cout<<N;
+    
+    return 0;
+}
