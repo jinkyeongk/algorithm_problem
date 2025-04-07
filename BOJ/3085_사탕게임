@@ -1,0 +1,64 @@
+#include <iostream>
+#include <algorithm>
+#define MAX 51
+
+using namespace std;
+
+int N,maxx ;
+char board[MAX][MAX];
+void check(){
+    // 행 검사
+    for(int i = 0 ; i < N ; i ++ ){
+        int sum = 1;
+        for(int j = 1 ; j < N ; j++){
+            if(board[i][j] == board[i][j-1]) sum++;
+            else sum = 1; // 여기서 끊고 다시 1부터 시작
+            maxx = max(maxx, sum);
+        }
+    }
+    
+    // 열 검사
+    for(int j = 0 ; j < N ; j ++ ){
+        int sum = 1;
+        for(int i = 1 ; i < N ; i++){
+            if(board[i][j] == board[i-1][j]) sum++;
+            else sum = 1;
+            maxx = max(maxx, sum);
+        }
+    }
+}
+int main() 
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    cin >> N; //보드의 크기
+    
+    for(int i = 0 ; i < N ; i ++ ){
+      for(int j = 0 ; j < N ; j++){
+        cin >> board[i][j];
+      }
+    }
+    
+    for(int i = 0 ; i < N ; i ++ ){
+      for(int j = 0 ; j < N-1 ; j++){
+        swap(board[i][j],board[i][j+1]);
+        check();
+         swap(board[i][j],board[i][j+1]);
+      }
+    }
+    
+    for(int j = 0 ; j < N ; j ++ ){
+      for(int i = 0 ; i < N-1 ; i++){
+        swap(board[i][j],board[i+1][j]);
+        check();
+         swap(board[i][j],board[i+1][j]);
+      }
+    }
+    
+    cout<<maxx<<endl;
+    
+    return 0;
+}
+
