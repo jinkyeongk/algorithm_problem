@@ -1,0 +1,83 @@
+#include <iostream>
+#include <string>
+#include <queue>
+#include <vector>
+#include <algorithm>
+
+#define MAX 26
+
+using namespace std;
+
+
+int arr[MAX][MAX];
+vector<int> block;
+bool visited[MAX][MAX];
+int dir[4][2]={
+  1,0,
+  0,1,
+  -1,0,
+  0,-1
+};
+int N,result;
+void bfs(int x,int y){
+    int sz=1;
+    queue<pair<int,int>> q;
+    q.push({x,y});
+   while(!q.empty()){
+      pair<int,int> p = q.front();
+      visited[p.second][p.first] = true;
+      
+      q.pop();
+      
+      for(int i=0 ;i < 4 ; i++){
+        int dx = p.first + dir[i][1];
+        int dy = p.second + dir[i][0];
+        
+        if(dy < 0 || dx < 0 || dy >= N || dx >= N )continue;
+        if(arr[dy][dx] == 0 || visited[dy][dx])continue;
+        visited[dy][dx] = 1;
+        q.push({dx,dy});
+        sz++;
+      }
+    }
+    
+    block.push_back(sz);
+}
+int main() 
+{
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    
+    
+    cin >> N ;
+    
+    for(int i = 0 ; i < N ; i++){
+      string line;
+      cin >>line;
+      
+      for(int j = 0 ; j < N ; j++){
+          arr[i][j] = line[j] - '0';
+      }  
+    }
+    
+    for(int i = 0 ; i < N ; i++){
+      for(int j = 0 ; j < N ; j++){
+          if(arr[i][j] == 1 && !visited[i][j]) {
+            bfs(j,i);
+            result++;
+          }
+      }  
+    }
+    
+    sort(block.begin(),block.end());
+    cout<<result<<'\n';
+    for(int i = 0 ; i < result ;i++){
+      cout << block[i]<<'\n';
+    }
+    
+    
+    
+    
+    return 0;
+}
