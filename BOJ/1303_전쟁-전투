@@ -1,0 +1,67 @@
+#include <iostream>
+#include <queue>
+#include <string>
+using namespace std;
+
+struct node{
+  int y,x;
+};
+int dir[4][2] = {
+  0,1,
+  1,0,
+  -1,0,
+  0,-1
+};
+string map[101];
+int N , M;
+int blueTeam, whiteTeam;
+bool visited[101][101];
+void BFS(int y,int x, char color){
+  int cnt=1;
+  queue <node> q;
+  visited[y][x] = true;
+  q.push({y,x});
+  
+  while(!q.empty()){
+    node now = q.front();
+    q.pop();
+    
+    for(int i = 0 ; i < 4 ; i ++ ){
+      int dy = now.y + dir[i][1];
+      int dx = now.x + dir[i][0];
+      if(dy < 0 || dx < 0 || dy >= M  || dx >= N) continue;
+      if(map[dy][dx] != color) continue;
+      if(visited[dy][dx])continue;
+      visited[dy][dx] = true;
+      q.push({dy,dx});
+      cnt++;
+    }
+  }
+  
+  if(color == 'W'){
+    whiteTeam +=(cnt * cnt);
+  }else{
+    blueTeam += (cnt * cnt);
+  }
+}
+int main() 
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    cin >> N >> M ;
+    
+    for(int i = 0 ; i < M ; i ++){
+        cin >> map[i];
+    }
+    
+    
+    for(int i = 0 ; i < M ; i ++){
+      for(int j = 0 ; j < N ; j ++){
+        if(!visited[i][j] ) BFS(i,j,map[i][j]);
+      }
+    }
+    cout<<whiteTeam << " "<< blueTeam;
+    return 0;
+}
