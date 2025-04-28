@@ -1,0 +1,40 @@
+#include <iostream>
+#include <string>
+#include <stack>
+
+using namespace std;
+
+int N;
+void hanoiTop(int from, int via, int to, int n){
+  
+  if(n == 1){
+    cout<< from <<" "<< to << "\n";
+  }else{
+    hanoiTop(from, to, via, n-1);
+    cout<<from << " "<<  to <<"\n";
+     hanoiTop(via, from, to, n-1);
+  }
+}
+void hanoiCnt(int n){
+    int num = 1;
+    while(--n){
+        num = num*2+1;
+    }
+    cout<<num<<"\n";
+}
+int main() 
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    
+    cin >> N ; 
+    
+    hanoiCnt(N);
+    hanoiTop(1,2,3,N);
+           
+    
+    return 0;
+}
+
